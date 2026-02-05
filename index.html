@@ -65,92 +65,95 @@
     </div>
   </div>
 
-  <script type="module">
-    import confetti from 'https://cdn.skypack.dev/canvas-confetti';
+ <script type="module">
+  import confetti from 'https://cdn.skypack.dev/canvas-confetti';
 
-    const yesButton = document.getElementById('yesButton');
-    const noButton = document.getElementById('noButton');
-    const imageDisplay = document.getElementById('imageDisplay');
-    const valentineQuestion = document.getElementById('valentineQuestion');
-    const responseButtons = document.getElementById('responseButtons');
+  const yesButton = document.getElementById('yesButton');
+  const noButton = document.getElementById('noButton');
+  const imageDisplay = document.getElementById('imageDisplay');
+  const valentineQuestion = document.getElementById('valentineQuestion');
+  const responseButtons = document.getElementById('responseButtons');
 
-    let noClickCount = 0;
-    let buttonHeight = 48;
-    let buttonWidth = 80;
-    let fontSize = 20;
+  let noClickCount = 0;
+  let buttonHeight = 48;
+  let buttonWidth = 80;
+  let fontSize = 20;
 
-    const imagePaths = [
-      "./images/image1.gif",
-      "./images/image2.gif",
-      "./images/image3.gif",
-      "./images/image4.gif",
-      "./images/image5.gif",
-      "./images/image6.gif",
-      "./images/image7.gif"
-    ];
+  const imagePaths = [
+    "./images/image1.gif",
+    "./images/image2.gif",
+    "./images/image3.gif",
+    "./images/image4.gif",
+    "./images/image5.gif",
+    "./images/image6.gif",
+    "./images/image7.gif"
+  ];
 
-    const noTexts = [
-      "No",
-      "Are you sure?",
-      "Pookie please",
-      "Don't do this to me :(",
-      "You're breaking my heart",
-      "I'm gonna cry...",
-      "Yes" // final transformation
-    ];
+  const noTexts = [
+    "No",
+    "Are you sure?",
+    "Pookie please",
+    "Don't do this to me :(",
+    "You're breaking my heart",
+    "I'm gonna cry...",
+    "Yes"
+  ];
 
-    noButton.addEventListener('click', function () {
-      noClickCount++;
+  noButton.addEventListener('click', function () {
+    noClickCount++;
 
-      // Shake animation
-      noButton.classList.add("shake");
-      setTimeout(() => noButton.classList.remove("shake"), 400);
+    // Shake animation
+    noButton.classList.add("shake");
+    setTimeout(() => noButton.classList.remove("shake"), 400);
 
-      // Change image
-      if (noClickCount < imagePaths.length) {
-        imageDisplay.src = imagePaths[noClickCount];
-      }
+    // Change image
+    if (noClickCount < imagePaths.length) {
+      imageDisplay.src = imagePaths[noClickCount];
+    }
 
-      // YES button grows dramatically
-      buttonHeight += 40;
-      buttonWidth += 40;
-      fontSize += 30;
+    // YES button grows dramatically
+    buttonHeight += 40;
+    buttonWidth += 40;
+    fontSize += 30;
 
-      yesButton.style.height = `${buttonHeight}px`;
-      yesButton.style.width = `${buttonWidth}px`;
-      yesButton.style.fontSize = `${fontSize}px`;
+    yesButton.style.height = `${buttonHeight}px`;
+    yesButton.style.width = `${buttonWidth}px`;
+    yesButton.style.fontSize = `${fontSize}px`;
 
-      // Update NO button text
-      noButton.textContent = noTexts[noClickCount];
+    // Update NO button text
+    noButton.textContent = noTexts[noClickCount];
 
-      // Make NO button run away randomly
-      const randomX = (Math.random() * 300) - 150; 
-      const randomY = (Math.random() * 200) - 100;
+    // Detect screen width for mobile-friendly movement
+    const isMobile = window.innerWidth < 600;
 
-      noButton.style.position = "relative";
-      noButton.style.transform = `translate(${randomX}px, ${randomY}px)`;
+    // Smaller movement on phones
+    const moveX = isMobile ? (Math.random() * 120 - 60) : (Math.random() * 300 - 150);
+    const moveY = isMobile ? (Math.random() * 80 - 40) : (Math.random() * 200 - 100);
 
-      // On final click, NO button becomes a YES button
-      if (noClickCount >= 6) {
-        noButton.style.backgroundColor = "#22c55e"; // green
-        noButton.style.color = "white";
+    noButton.style.position = "relative";
+    noButton.style.transform = `translate(${moveX}px, ${moveY}px)`;
 
-        noButton.addEventListener('click', () => {
-          imageDisplay.src = './images/image7.gif';
-          valentineQuestion.textContent = "Yayyy!! :3";
-          responseButtons.style.display = 'none';
-          confetti();
-        });
-      }
-    });
+    // Final click turns NO into YES
+    if (noClickCount >= 6) {
+      noButton.style.backgroundColor = "#22c55e";
+      noButton.style.color = "white";
 
-    yesButton.addEventListener('click', () => {
-      imageDisplay.src = './images/image7.gif';
-      valentineQuestion.textContent = "Yayyy!! :3";
-      responseButtons.style.display = 'none';
-      confetti();
-    });
-  </script>
+      noButton.addEventListener('click', () => {
+        imageDisplay.src = './images/image7.gif';
+        valentineQuestion.textContent = "Yayyy!! :3";
+        responseButtons.style.display = 'none';
+        confetti();
+      });
+    }
+  });
 
+  yesButton.addEventListener('click', () => {
+    imageDisplay.src = './images/image7.gif';
+    valentineQuestion.textContent = "Yayyy!! :3";
+    responseButtons.style.display = 'none';
+    confetti();
+  });
+</script>
 </body>
 </html>
+

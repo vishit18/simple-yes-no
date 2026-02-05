@@ -1,4 +1,4 @@
-<!DOCTYPE html><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -65,95 +65,93 @@
     </div>
   </div>
 
- <script type="module">
-  import confetti from 'https://cdn.skypack.dev/canvas-confetti';
+  <script type="module">
+    import confetti from 'https://cdn.skypack.dev/canvas-confetti';
 
-  const yesButton = document.getElementById('yesButton');
-  const noButton = document.getElementById('noButton');
-  const imageDisplay = document.getElementById('imageDisplay');
-  const valentineQuestion = document.getElementById('valentineQuestion');
-  const responseButtons = document.getElementById('responseButtons');
+    const yesButton = document.getElementById('yesButton');
+    const noButton = document.getElementById('noButton');
+    const imageDisplay = document.getElementById('imageDisplay');
+    const valentineQuestion = document.getElementById('valentineQuestion');
+    const responseButtons = document.getElementById('responseButtons');
 
-  let noClickCount = 0;
-  let buttonHeight = 48;
-  let buttonWidth = 80;
-  let fontSize = 20;
+    let noClickCount = 0;
+    let yesHeight = 48;
+    let yesWidth = 80;
+    let yesFont = 20;
 
-  const imagePaths = [
-    "./images/image1.gif",
-    "./images/image2.gif",
-    "./images/image3.gif",
-    "./images/image4.gif",
-    "./images/image5.gif",
-    "./images/image6.gif",
-    "./images/image7.gif"
-  ];
+    let noScale = 1; // start full size
 
-  const noTexts = [
-    "No",
-    "Are you sure?",
-    "Pookie please",
-    "Don't do this to me :(",
-    "You're breaking my heart",
-    "I'm gonna cry...",
-    "Yes"
-  ];
+    const imagePaths = [
+      "./images/image1.gif",
+      "./images/image2.gif",
+      "./images/image3.gif",
+      "./images/image4.gif",
+      "./images/image5.gif",
+      "./images/image6.gif",
+      "./images/image7.gif"
+    ];
 
-  noButton.addEventListener('click', function () {
-    noClickCount++;
+    const noTexts = [
+      "No",
+      "Are you sure?",
+      "Pookie please",
+      "Don't do this to me :(",
+      "You're breaking my heart",
+      "I'm gonna cry...",
+      "Yes"
+    ];
 
-    // Shake animation
-    noButton.classList.add("shake");
-    setTimeout(() => noButton.classList.remove("shake"), 400);
+    noButton.addEventListener('click', function () {
+      noClickCount++;
 
-    // Change image
-    if (noClickCount < imagePaths.length) {
-      imageDisplay.src = imagePaths[noClickCount];
-    }
+      // Shake animation
+      noButton.classList.add("shake");
+      setTimeout(() => noButton.classList.remove("shake"), 400);
 
-    // YES button grows dramatically
-    buttonHeight += 40;
-    buttonWidth += 40;
-    fontSize += 30;
+      // Change image
+      if (noClickCount < imagePaths.length) {
+        imageDisplay.src = imagePaths[noClickCount];
+      }
 
-    yesButton.style.height = `${buttonHeight}px`;
-    yesButton.style.width = `${buttonWidth}px`;
-    yesButton.style.fontSize = `${fontSize}px`;
+      // YES button grows
+      yesHeight += 40;
+      yesWidth += 40;
+      yesFont += 30;
 
-    // Update NO button text
-    noButton.textContent = noTexts[noClickCount];
+      yesButton.style.height = `${yesHeight}px`;
+      yesButton.style.width = `${yesWidth}px`;
+      yesButton.style.fontSize = `${yesFont}px`;
 
-    // Detect screen width for mobile-friendly movement
-    const isMobile = window.innerWidth < 600;
+      // NO button text update
+      noButton.textContent = noTexts[noClickCount];
 
-    // Smaller movement on phones
-    const moveX = isMobile ? (Math.random() * 120 - 60) : (Math.random() * 300 - 150);
-    const moveY = isMobile ? (Math.random() * 80 - 40) : (Math.random() * 200 - 100);
+      // NO button shrinks smoothly
+      noScale -= 0.15;
+      if (noScale < 0.3) noScale = 0.3; // never fully disappear
 
-    noButton.style.position = "relative";
-    noButton.style.transform = `translate(${moveX}px, ${moveY}px)`;
+      noButton.style.transform = `scale(${noScale})`;
 
-    // Final click turns NO into YES
-    if (noClickCount >= 6) {
-      noButton.style.backgroundColor = "#22c55e";
-      noButton.style.color = "white";
+      // Final click turns NO into YES
+      if (noClickCount >= 6) {
+        noButton.style.backgroundColor = "#22c55e";
+        noButton.style.color = "white";
 
-      noButton.addEventListener('click', () => {
-        imageDisplay.src = './images/image7.gif';
-        valentineQuestion.textContent = "Yayyy!! :3";
-        responseButtons.style.display = 'none';
-        confetti();
-      });
-    }
-  });
+        noButton.addEventListener('click', () => {
+          imageDisplay.src = './images/image7.gif';
+          valentineQuestion.textContent = "Yayyy!! :3";
+          responseButtons.style.display = 'none';
+          confetti();
+        });
+      }
+    });
 
-  yesButton.addEventListener('click', () => {
-    imageDisplay.src = './images/image7.gif';
-    valentineQuestion.textContent = "Yayyy!! :3";
-    responseButtons.style.display = 'none';
-    confetti();
-  });
-</script>
+    yesButton.addEventListener('click', () => {
+      imageDisplay.src = './images/image7.gif';
+      valentineQuestion.textContent = "Yayyy!! :3";
+      responseButtons.style.display = 'none';
+      confetti();
+    });
+  </script>
+
 </body>
 </html>
-
